@@ -8,6 +8,8 @@ defmodule Hive.MixProject do
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
       elixirc_paths: elixirc_paths(Mix.env())
     ]
   end
@@ -25,7 +27,8 @@ defmodule Hive.MixProject do
       {:elixir_uuid, "~> 1.2"},
       {:monero, path: "~/Code/exmnr/"},
       {:hackney, "~> 1.15.0"},
-      {:jason, "~> 1.1.2"}
+      {:jason, "~> 1.1.2"},
+      {:excoveralls, "~> 0.10", only: :test},
     ]
   end
 
