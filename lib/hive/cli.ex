@@ -15,7 +15,7 @@ defmodule Hive.Cli do
       "exit"
     ]
 
-    File.mkdir!(Config.wallet_dir_path(name))
+    File.mkdir!(Config.wallet_dir_path(dir, name))
 
     case System.cmd("monero-wallet-cli", params) do
       {output, 0} ->

@@ -1,6 +1,7 @@
 defmodule Hive.CliTest do
   use ExUnit.Case
   alias Hive.{Cli, Config}
+  import Hive.Assertions
 
   setup do
     [name: UUID.uuid4(), wallets_dir: System.get_env("HIVE_WALLETS_DIR")]
@@ -10,9 +11,7 @@ defmodule Hive.CliTest do
     test "wallet creation", %{wallets_dir: wallets_dir, name: name} do
       assert {:ok, "20" <> _} = Cli.create_wallet(wallets_dir, name)
 
-      assert File.exists?(Config.wallet_data_file_path(wallets_dir, name))
-      assert File.exists?(Config.wallet_data_file_path(wallets_dir, name) <> ".address.txt")
-      assert File.exists?(Config.wallet_data_file_path(wallets_dir, name) <> ".keys")
+      assert_wallet_exists(Config.wallet_data_file_path(wallets_dir, name))
     after
       File.rm_rf!(Config.wallet_dir_path(wallets_dir, name))
     end
@@ -30,12 +29,13 @@ defmodule Hive.CliTest do
       assert String.contains?(wallet_process, "monero-wallet-rpc")
 
       wallet_params = String.split(wallet_process, "monero-wallet-rpc") |> List.last()
+
       assert wallet_params ==
-               " --testnet --trusted-daemon --wallet-file #{Config.wallet_data_file_path(wallets_dir, name)} --password  
-              --rpc-bind-port #{port} --disable-rpc-login --rpc-bind-ip 127.0.0.1\n"
+               " --testnet --trusted-daemon --wallet-file #{Config.wallet_data_file_path(wallets_dir, name)} --password  --rpc-bind-port #{
+                 port
+               } --disable-rpc-login --rpc-bind-ip 127.0.0.1\n"
     after
       File.rm_rf!(Config.wallet_dir_path(wallets_dir, name))
-    end
     end
   end
 
