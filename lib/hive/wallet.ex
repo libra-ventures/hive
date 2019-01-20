@@ -1,5 +1,9 @@
 defmodule Hive.Wallet do
   alias Hive.{Config, Cli}
+  alias Hive.Wallet.Worker
+
+  defdelegate transfer(src_name, dst_name, amount), to: Worker
+
   @doc "genearate a wallet inside a $HIVE_WALLETS_DIR dir"
   def create() do
     Config.wallets_dir_path()

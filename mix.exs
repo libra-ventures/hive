@@ -25,14 +25,14 @@ defmodule Hive.MixProject do
     [
       {:erlexec, "~>1.9.3"},
       {:elixir_uuid, "~> 1.2"},
-      {:monero, path: "~/Code/exmnr/"},
+      {:monero, path: "~/Code/monero/monero"},
       {:hackney, "~> 1.15.0"},
       {:jason, "~> 1.1.2"},
-      {:excoveralls, "~> 0.10", only: :test},
+      {:excoveralls, "~> 0.10", only: :test}
     ]
   end
 
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(:dev), do: ["lib"]
+  defp elixirc_paths(:dev), do: ["lib", "test"]
   defp elixirc_paths(_), do: ["lib"]
 end

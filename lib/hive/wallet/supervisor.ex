@@ -1,5 +1,6 @@
 defmodule Hive.Wallet.Supervisor do
   use DynamicSupervisor
+  alias Hive.AccountBook
 
   def start_link(arg) do
     DynamicSupervisor.start_link(__MODULE__, arg, name: __MODULE__)
@@ -11,7 +12,7 @@ defmodule Hive.Wallet.Supervisor do
   end
 
   def start_child(name) do
-    spec = {Hive.Wallet.Worker, name}
+    spec = {Hive.Wallet.Worker, [name, AccountBook]}
     DynamicSupervisor.start_child(Hive.Wallet.Supervisor, spec)
   end
 end
