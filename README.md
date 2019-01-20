@@ -1,6 +1,6 @@
 # Hive
 
-Concurrent Monero wallets operator
+Concurrent Monero wallets operator. This tool is in the proof of concept stage.
 
 ## Usage
 
